@@ -1,0 +1,17 @@
+# Pre-commit guards 🛡️
+# Har "git commit" se pehle ye sab check honge
+
+repos:
+  # Guard 1: gitleaks 🔑 - code mein API key / password to nahi?
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+
+  # Guard 2: ruff 🧹 - code saaf hai ya nahi?
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.3
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format

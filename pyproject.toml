@@ -18,3 +18,9 @@ agentic-ai-120 = "agentic_ai_120:main"
 [build-system]
 requires = ["uv_build>=0.13.7,<0.14.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.7.0",
+    "ruff>=0.17.3",
+]
