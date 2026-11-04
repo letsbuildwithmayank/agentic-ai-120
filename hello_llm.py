@@ -52,7 +52,9 @@ for model in MODELS:
         break  # jawab mil gaya, loop se bahar niklo
     except errors.APIError as e:
         if e.code in RETRYABLE_CODES:
-            print(f"⚠️  {model} busy hai (error {e.code}), agla model try kar raha hoon...\n")
+            print(
+                f"⚠️  {model} busy hai (error {e.code}), agla model try kar raha hoon...\n"
+            )
             continue  # agla model try karo
         # Koi aur error hai (jaise galat key) to ruk jao aur dikhao
         print(f"❌ Error {e.code}: {e.message}")
@@ -93,4 +95,3 @@ print(f"   Total tokens    : {total_tokens}")
 # for model in client.models.list():
 #     if "3.8" in model.name:
 #         print("  ", model.name)
-    
