@@ -13,3 +13,7 @@ wheels/
 .env
 .env.*
 !.env.example
+
+# Generated media files
+*.wav
+*.mp3
