@@ -10,9 +10,9 @@ Hi, I'm **Mayank** 👋, a web developer learning Agentic AI from the ground up.
 
 ## 📍 Progress
 
-| Day | Date | Topic | Status |
-|-----|------|-------|--------|
-| 1 | 04 Nov 2026 | Dev setup: uv, Git/GitHub flow, secrets hygiene, first Gemini API call | ✅ Done |
+| Day | Date | Topic | Notes | Status |
+|-----|------|-------|-------|--------|
+| 1 | 04 Nov 2026 | Dev setup: uv, Git/GitHub flow, secrets hygiene, first Gemini API call | [Day 1](notes/day01.md) | ✅ Done |
 
 ---
 
@@ -34,6 +34,7 @@ agentic-ai-120/
 ├── evals/                # Testing how good the AI outputs are
 ├── hello_llm.py          # Day 1: first Gemini API call with model fallback
 ├── .env.example          # Template for API keys (copy to .env)
+├── .pre-commit-config.yaml  # Checks for leaked secrets and code style
 └── pyproject.toml        # Project dependencies (managed by uv)
 ```
 
@@ -52,7 +53,12 @@ cd agentic-ai-120
 uv sync
 ```
 
-**3. Add your API keys**
+**3. Turn on the pre-commit checks**
+```bash
+uv run pre-commit install
+```
+
+**4. Add your API keys**
 
 Copy `.env.example` to `.env` and fill in your keys:
 ```bash
@@ -60,7 +66,7 @@ cp .env.example .env
 ```
 Get a free Gemini key from [Google AI Studio](https://aistudio.google.com).
 
-**4. Run your first LLM call**
+**5. Run your first LLM call**
 ```bash
 uv run hello_llm.py
 ```
@@ -72,12 +78,13 @@ uv run hello_llm.py
 - **Python** with **uv** for environments and dependencies
 - **Gemini API** (google-genai SDK)
 - **Git + GitHub** with branches, PRs and conventional commits
+- **pre-commit** with **gitleaks** (secret scanning) and **ruff** (linting and formatting)
 
 ---
 
 ## 🔐 Security
 
-API keys live only in `.env`, which is git-ignored. Never commit real keys.
+API keys live only in `.env`, which is git-ignored. Every commit is scanned by gitleaks so real keys never reach GitHub.
 
 ---
 
