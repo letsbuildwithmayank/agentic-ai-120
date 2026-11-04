@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Secrets - NEVER commit these
+.env
+.env.*
+!.env.example
