@@ -7,7 +7,10 @@ authors = [
     { name = "Mayank", email = "letsbuildwithmayank@gmail.com" }
 ]
 requires-python = ">=3.15"
-dependencies = []
+dependencies = [
+    "google-genai>=2.34.0",
+    "python-dotenv>=1.2.4",
+]
 
 [project.scripts]
 agentic-ai-120 = "agentic_ai_120:main"

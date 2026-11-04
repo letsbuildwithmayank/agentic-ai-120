@@ -8,3 +8,12 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Secrets - NEVER commit these
+.env
+.env.*
+!.env.example
+
+# Generated media files
+*.wav
+*.mp3
