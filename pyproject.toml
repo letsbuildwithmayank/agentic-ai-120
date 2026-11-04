@@ -10,6 +10,8 @@ requires-python = ">=3.15"
 dependencies = [
     "google-genai>=2.34.0",
     "python-dotenv>=1.2.4",
+    "tiktoken>=0.14.0",
+    "tokenizers>=0.23.3",
 ]
 
 [project.scripts]
@@ -21,6 +23,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "ipykernel>=7.4.0",
     "pre-commit>=4.7.0",
     "ruff>=0.17.3",
 ]
