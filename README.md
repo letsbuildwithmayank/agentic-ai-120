@@ -26,16 +26,16 @@ The full 120-day roadmap is coming soon. 🚧
 
 ```
 agentic-ai-120/
-├── src/agentic_ai_120/   # Reusable core code (shared across projects)
-├── notebooks/            # Daily experiments and practice scripts
-│   └── day01/            # Exploring the Gemini client, response object and tokens
-├── notes/                # Daily learning notes
-├── projects/             # Portfolio projects
-├── evals/                # Testing how good the AI outputs are
-├── hello_llm.py          # Day 1: first Gemini API call with model fallback
-├── .env.example          # Template for API keys (copy to .env)
+├── src/agentic_ai_120/      # Reusable core code (shared across projects)
+├── notebooks/               # Daily experiments and practice scripts
+│   └── day01/               # Exploring the Gemini client, response object and tokens
+├── notes/                   # Daily learning notes
+├── projects/                # Portfolio projects
+├── evals/                   # Testing how good the AI outputs are
+├── hello_llm.py             # Day 1: first Gemini API call with model fallback
+├── .env.example             # Template for API keys (copy to .env)
 ├── .pre-commit-config.yaml  # Checks for leaked secrets and code style
-└── pyproject.toml        # Project dependencies (managed by uv)
+└── pyproject.toml           # Project dependencies (managed by uv)
 ```
 
 ---
