@@ -17,3 +17,5 @@ wheels/
 # Generated media files
 *.wav
 *.mp3
+# Local databases (call logs)
+*.db

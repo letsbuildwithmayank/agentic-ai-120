@@ -9,6 +9,7 @@ authors = [
 requires-python = ">=3.15"
 dependencies = [
     "google-genai>=2.34.0",
+    "litellm>=1.109.1",
     "matplotlib>=3.11.2",
     "numpy>=2.5.4",
     "python-dotenv>=1.2.4",
@@ -32,5 +33,12 @@ dev = [
 ]
 
 [tool.ruff.lint]
-# zip(ids, ids[1:]) is kept on purpose to match Karpathy's tokenizer code
-ignore = ["RUF007"]
+# Keep only the useful rules: real errors, unused imports, import order, likely bugs
+select = ["E", "F", "I", "B"]
+# E501: long lines (ruff format handles layout)
+# B905: zip() strict= (our zip(ids, ids[1:]) has different lengths on purpose)
+ignore = ["E501", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+# Exploration notebooks: no bug-pattern rules, just the basics
+"notebooks/**" = ["B"]
