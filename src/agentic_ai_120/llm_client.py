@@ -90,11 +90,21 @@ def log_call(
 # ---------------- One call ----------------
 
 
+def _completion_args(model, messages, timeout, temperature, stream=False):
+    """Build the arguments for LiteLLM. Temperature is only sent when it's set."""
+    args = {"model": model, "messages": messages, "timeout": timeout}
+    if temperature is not None:
+        args["temperature"] = temperature
+    if stream:
+        args["stream"] = True
+    return args
+
+
 def _get_cost_usd(response):
     """Ask LiteLLM what a call cost in USD. Unknown or free models -> None."""
     try:
         return litellm.completion_cost(completion_response=response)
-    except Exception:  # noqa: BLE001 - any pricing problem just means "cost unknown"
+    except Exception:  # any pricing problem just means "cost unknown"
         return None
 
 
@@ -108,12 +118,12 @@ def _fail(error, model, start, db_path):
     raise APIError(code, str(error)[:200]) from error
 
 
-def _call_once(model, messages, timeout, db_path):
+def _call_once(model, messages, timeout, temperature, db_path):
     """Make ONE normal (non-streaming) call and log it."""
     start = time.perf_counter()
     try:
-        response = completion(model=model, messages=messages, timeout=timeout)
-    except Exception as error:  # noqa: BLE001 - _fail() re-raises anything that isn't an API error
+        response = completion(**_completion_args(model, messages, timeout, temperature))
+    except Exception as error:  # _fail() re-raises anything that isn't an API error
         _fail(error, model, start, db_path)
 
     latency_ms = (time.perf_counter() - start) * 1000
@@ -130,14 +140,14 @@ def _call_once(model, messages, timeout, db_path):
     return response
 
 
-def _open_stream(model, messages, timeout, db_path):
+def _open_stream(model, messages, timeout, temperature, db_path):
     """Start a streaming call. Returns (stream, start_time)."""
     start = time.perf_counter()
     try:
         stream = completion(
-            model=model, messages=messages, timeout=timeout, stream=True
+            **_completion_args(model, messages, timeout, temperature, stream=True)
         )
-    except Exception as error:  # noqa: BLE001 - _fail() re-raises anything that isn't an API error
+    except Exception as error:  # _fail() re-raises anything that isn't an API error
         _fail(error, model, start, db_path)
     return stream, start
 
@@ -169,11 +179,18 @@ def _stream_pieces(model, messages, stream, start, db_path):
 
 
 def chat(
-    messages, model=None, stream=False, max_retries=2, timeout=30, db_path=DB_PATH
+    messages,
+    model=None,
+    stream=False,
+    max_retries=2,
+    timeout=30,
+    temperature=None,
+    db_path=DB_PATH,
 ):
     """Send messages to an LLM, with retries, a fallback chain and a call log.
 
     model=None  -> try DEFAULT_MODELS in order; model="..." -> use only that model.
+    temperature=None -> the provider's default; 0 -> most stable answers (good for evals).
     stream=False -> returns (answer_text, model_used)
     stream=True  -> returns (generator_of_text_pieces, model_used)
     """
@@ -191,8 +208,12 @@ def chat(
         # so this function never sees a later loop value (Ruff B023).
         def make_call(model_for_this_try=current_model):
             if stream:
-                return _open_stream(model_for_this_try, messages, timeout, db_path)
-            return _call_once(model_for_this_try, messages, timeout, db_path)
+                return _open_stream(
+                    model_for_this_try, messages, timeout, temperature, db_path
+                )
+            return _call_once(
+                model_for_this_try, messages, timeout, temperature, db_path
+            )
 
         try:
             result = call_with_retries(make_call, max_retries=max_retries)
