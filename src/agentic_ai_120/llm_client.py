@@ -29,9 +29,6 @@ DEFAULT_MODELS = [
 DB_PATH = "llm_calls.db"
 
 
-# ---------------- SQLite log ----------------
-
-
 def init_db(db_path=DB_PATH):
     """Create the log table if it doesn't exist yet."""
     connection = sqlite3.connect(db_path)
@@ -87,16 +84,19 @@ def log_call(
     connection.close()
 
 
-# ---------------- One call ----------------
-
-
-def _completion_args(model, messages, timeout, temperature, stream=False):
-    """Build the arguments for LiteLLM. Temperature is only sent when it's set."""
+def _completion_args(
+    model, messages, timeout, temperature, stream=False, tools=None, tool_choice=None
+):
+    """Build the arguments for LiteLLM. Optional ones are only sent when they're set."""
     args = {"model": model, "messages": messages, "timeout": timeout}
     if temperature is not None:
         args["temperature"] = temperature
     if stream:
         args["stream"] = True
+    if tools is not None:
+        args["tools"] = tools
+        if tool_choice is not None:
+            args["tool_choice"] = tool_choice
     return args
 
 
@@ -118,11 +118,22 @@ def _fail(error, model, start, db_path):
     raise APIError(code, str(error)[:200]) from error
 
 
-def _call_once(model, messages, timeout, temperature, db_path):
+def _call_once(
+    model, messages, timeout, temperature, db_path, tools=None, tool_choice=None
+):
     """Make ONE normal (non-streaming) call and log it."""
     start = time.perf_counter()
     try:
-        response = completion(**_completion_args(model, messages, timeout, temperature))
+        response = completion(
+            **_completion_args(
+                model,
+                messages,
+                timeout,
+                temperature,
+                tools=tools,
+                tool_choice=tool_choice,
+            )
+        )
     except Exception as error:  # _fail() re-raises anything that isn't an API error
         _fail(error, model, start, db_path)
 
@@ -175,9 +186,6 @@ def _stream_pieces(model, messages, stream, start, db_path):
     )
 
 
-# ---------------- The public function ----------------
-
-
 def chat(
     messages,
     model=None,
@@ -185,6 +193,8 @@ def chat(
     max_retries=2,
     timeout=30,
     temperature=None,
+    tools=None,
+    tool_choice=None,
     db_path=DB_PATH,
 ):
     """Send messages to an LLM, with retries, a fallback chain and a call log.
@@ -193,16 +203,19 @@ def chat(
     temperature=None -> the provider's default; 0 -> most stable answers (good for evals).
     stream=False -> returns (answer_text, model_used)
     stream=True  -> returns (generator_of_text_pieces, model_used)
+    tools=[...]  -> returns (message, model_used): message.content is the text (or None),
+                    message.tool_calls is the list of tool requests (or None).
+                    tool_choice: "auto" (default), "required" or "none".
     """
-    init_db(db_path)
+    if stream and tools is not None:
+        raise ValueError("stream=True with tools is not supported yet")
 
+    init_db(db_path)
     if model is not None:
         models = [model]
     else:
         models = DEFAULT_MODELS
-
     last_error = None
-
     for current_model in models:
         # The default value saves a COPY of current_model right now,
         # so this function never sees a later loop value (Ruff B023).
@@ -212,7 +225,13 @@ def chat(
                     model_for_this_try, messages, timeout, temperature, db_path
                 )
             return _call_once(
-                model_for_this_try, messages, timeout, temperature, db_path
+                model_for_this_try,
+                messages,
+                timeout,
+                temperature,
+                db_path,
+                tools,
+                tool_choice,
             )
 
         try:
@@ -227,6 +246,10 @@ def chat(
                 current_model, messages, opened_stream, start, db_path
             )
             return pieces, current_model
+        if tools is not None:
+            return result.choices[
+                0
+            ].message, current_model  # the whole message: text AND tool calls
         return result.choices[0].message.content, current_model
 
     raise last_error  # every model failed

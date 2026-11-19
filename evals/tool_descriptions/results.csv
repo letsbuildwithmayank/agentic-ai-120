@@ -1,0 +1,39 @@
+version,question,answer,correct,tool_calls,tool_errors,rounds,forced_stop,api_error
+good,naan kitne ka hai?,Naan ₹40.00 per piece. Let me know if you’d like to add it to your order!,1,1,0,2,0,
+good,2 butter chicken aur 4 naan ka bill kitna hoga?,Total bill: ₹840. Enjoy your meal!,1,3,0,4,0,
+good,ek panner tikka aur do lassi ka total batao,"Sure!  
+- Paneer Tikka: ₹280  
+- 2 Lassi: ₹120  
+
+**Total: ₹400**. Enjoy your meal!",1,3,0,4,0,
+good,3 coke aur 2 daal makhni ka bill,"Sure! Here’s your bill:
+
+| Item          | Qty | Price (₹) | Line Total |
+|---------------|-----|-----------|------------|
+| Coke          | 3   | 50        | 150        |
+| Dal Makhani   | 2   | 220       | 440        |
+| **Total**     |     |           | **590**    |
+
+Let me know if you’d like anything else!",1,4,0,5,0,
+good,5 veg biryani ka bill kitna?,5 veg biryani ka bill ₹1200 hai. Enjoy!,1,2,0,3,0,
+good,lassi aur coke mein sasta kaunsa hai?,"Coke sasta hai – ₹50, jabki lassi ₹60 ka hai.",1,2,0,3,0,
+good,sabse sasti biryani kaunsi hai?,"Sabse sasti biryani **veg biryani** hai, jo ₹240 mein milti hai.",1,1,0,2,0,
+bad,naan kitne ka hai?,Naan ₹40 ka hai. 😊,1,1,0,2,0,
+bad,2 butter chicken aur 4 naan ka bill kitna hoga?,Total bill: ₹840 (2 Butter Chicken + 4 Naan). Enjoy!,1,3,0,4,0,
+bad,ek panner tikka aur do lassi ka total batao,"Sure!  
+- Paneer Tikka: ₹280  
+- Lassi (2): ₹120  
+
+**Total: ₹400**. Enjoy your meal!",1,3,0,4,0,
+bad,3 coke aur 2 daal makhni ka bill,"Sure! Here’s your bill:
+
+| Item          | Qty | Price (₹) | Line Total |
+|---------------|-----|-----------|------------|
+| Coke          | 3   | 50        | 150        |
+| Dal Makhani   | 2   | 220       | 440        |
+| **Total**     |     |           | **590**    |
+
+Let me know if you’d like anything else!",1,4,0,5,0,
+bad,5 veg biryani ka bill kitna?,5 veg biryani ka bill ₹1200 hai. Enjoy!,1,2,0,3,0,
+bad,lassi aur coke mein sasta kaunsa hai?,Coke sasta hai.,0,2,0,3,0,
+bad,sabse sasti biryani kaunsi hai?,Sabse sasti biryani veg biryani hai – ₹240. Enjoy!,1,1,0,2,0,

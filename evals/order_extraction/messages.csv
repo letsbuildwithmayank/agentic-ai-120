@@ -1,0 +1,31 @@
+id,message,expected_items,expected_modifiers,expected_unavailable,expected_time,expected_notes
+1,"2 butter chicken aur 4 naan bhej do",butter chicken:2;naan:4,,,,
+2,"ek paneer tikka bina pyaaz ke aur 3 naan",paneer tikka:1;naan:3,paneer tikka:no onion,,,
+3,"bhai 2 butter chiken extra teekha, raat 8 baje tak bhej dena",butter chicken:2,butter chicken:extra spicy,,20:00,
+4,"1 veg biryani kam teekhi wali and one coke without ice",veg biryani:1;coke:1,veg biryani:less spicy;coke:no ice,,,
+5,"3 lassi bhejo, nahi nahi 3 coke bhejo",coke:3,,,,
+6,"2 pizza aur 2 coke",coke:2,,pizza,,
+7,"daal makhni 2 plate aur 6 naan, ghar pe koi nahi hai to guard ko de dena",dal makhani:2;naan:6,,,,guard
+8,"chicken biryani 1 extra spicy, ek raita bhi",chicken biryani:1,chicken biryani:extra spicy,raita,,
+9,"kal dopahar 1 baje 4 veg biryani chahiye",veg biryani:4,,,13:00,
+10,"panner tikka 2 less oil wala, 2 lassi",paneer tikka:2;lassi:2,paneer tikka:less oil,,,
+11,"one butter chicken no garlic please and 2 naan, 9:30 pm tak",butter chicken:1;naan:2,butter chicken:no garlic,,21:30,
+12,"5 plates of chiken biryani nhi nhi veg biyani",veg biryani:5,,,,
+13,"2 naan aur ek dal makhani, gate number 3 pe aana",naan:2;dal makhani:1,,,,gate
+14,"ek coke ek lassi ek butter chicken",coke:1;lassi:1;butter chicken:1,,,,
+15,"momos 2 plate aur 1 chicken biryani",chicken biryani:1,,momos,,
+16,"4 naan extra butter wale aur 2 dal makhani",naan:4;dal makhani:2,naan:extra butter,,,
+17,"bhaiya 2 veg biryani jaldi bhejna bahut bhookh lagi hai",veg biryani:2,,,,
+18,"paneer tikka 1, butter chicken 1, naan 4, coke 2 total kitna hoga?",paneer tikka:1;butter chicken:1;naan:4;coke:2,,,,
+19,"1 chicken biryani bina pyaaz ke, aur raat 10 baje deliver karna",chicken biryani:1,chicken biryani:no onion,,22:00,
+20,"teen lassi aur do paneer tikka, 3rd floor flat 302",lassi:3;paneer tikka:2,,,,302
+21,"do veg biryani aur teen gulab jamun",veg biryani:2,,gulab jamun,,
+22,"ek coke bina barf ke",coke:1,coke:no ice,,,
+23,"butter chicken 2 and naan 5 at 7:45 pm, cutlery mat bhejna",butter chicken:2;naan:5,,,19:45,cutlery
+24,"1 dal makhani less oil, 1 paneer tikka no onion no garlic",dal makhani:1;paneer tikka:1,dal makhani:less oil;paneer tikka:no onion;paneer tikka:no garlic,,,
+25,"mujhe 2 chicken biryani chahiye... actually 3 kar do",chicken biryani:3,,,,
+26,"ek pasta aur ek garlic bread",,,pasta;garlic bread,,
+27,"4 lassi achhe se pack karna travel karna hai",lassi:4,,,,pack
+28,"sham 6 baje 2 paneer tikka aur 2 lassi",paneer tikka:2;lassi:2,,,18:00,
+29,"naan 10 aur butter chicken 3 extra butter ke saath",naan:10;butter chicken:3,butter chicken:extra butter,,,
+30,"2 dal makhani aur 4 naan, dopahar 2 baje tak, bell mat bajana baby so raha hai",dal makhani:2;naan:4,,,14:00,bell

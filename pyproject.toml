@@ -9,9 +9,11 @@ authors = [
 requires-python = ">=3.15"
 dependencies = [
     "google-genai>=2.34.0",
+    "instructor>=1.17.0",
     "litellm>=1.109.1",
     "matplotlib>=3.11.2",
     "numpy>=2.5.4",
+    "pydantic>=2.14.2",
     "python-dotenv>=1.2.4",
     "tiktoken>=0.14.0",
     "tokenizers>=0.23.3",
